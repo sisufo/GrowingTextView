@@ -672,7 +672,11 @@
             if (![delegate performSelector:@selector(growingTextViewShouldReturn:) withObject:self]) {
                 return YES;
             } else {
-                [textView resignFirstResponder];
+                if ([delegate respondsToSelector:@selector(growingTextViewHandleReturn:)]) {
+                    if (![delegate performSelector:@selector(growingTextViewHandleReturn:) withObject:self]) {
+                        [textView resignFirstResponder];
+                    }
+                }
                 return NO;
             }
         }
